@@ -1,22 +1,22 @@
-package com.example.foodyapp
+package com.example.foodyapp.ui.fragments.foodjoke
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.foodyapp.databinding.FragmentFavoriteRecipesBinding
+import com.example.foodyapp.databinding.FragmentFoodJokeBinding
 
-class FavoriteRecipesFragment : Fragment() {
+class FoodJokeFragment : Fragment() {
 
-    private var _binding : FragmentFavoriteRecipesBinding? = null
-    private val  binding  get() =  _binding!!
+    private var _binding : FragmentFoodJokeBinding? = null
+    private val  binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFavoriteRecipesBinding.inflate(layoutInflater)
+        _binding = FragmentFoodJokeBinding.inflate(layoutInflater)
         return binding.root
     }
 

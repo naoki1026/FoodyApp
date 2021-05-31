@@ -1,20 +1,16 @@
-package com.example.foodyapp
+package com.example.foodyapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.foodyapp.R
 import com.example.foodyapp.databinding.ActivityMainBinding
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
-    // APIKey : 85103093f86b4ebfbfda85266745cf78
 
     private var _binding : ActivityMainBinding? = null
     private val binding get() = _binding!!

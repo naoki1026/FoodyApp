@@ -1,23 +1,23 @@
-package com.example.foodyapp
+package com.example.foodyapp.ui.fragments.recipes
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.foodyapp.databinding.FragmentFavoriteRecipesBinding
-import com.example.foodyapp.databinding.FragmentFoodJokeBinding
+import com.example.foodyapp.databinding.FragmentRecipesBinding
 
-class FoodJokeFragment : Fragment() {
+class RecipesFragment : Fragment() {
 
-    private var _binding : FragmentFoodJokeBinding? = null
-    private val  binding get() = _binding!!
+    private var _binding : FragmentRecipesBinding? = null
+    private val  binding  get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFoodJokeBinding.inflate(layoutInflater)
+        _binding = FragmentRecipesBinding.inflate(layoutInflater)
+        binding.shimmerRecyclerView.showShimmer()
         return binding.root
     }
 
