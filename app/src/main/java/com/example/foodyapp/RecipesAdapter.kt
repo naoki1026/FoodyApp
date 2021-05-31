@@ -36,6 +36,9 @@ class RecipesAdapter() : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentResult = recipes[position]
+
+        // 記述し忘れ
+        holder.bind(currentResult)
     }
 
     override fun getItemCount(): Int {
@@ -45,8 +48,8 @@ class RecipesAdapter() : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
     // 2つのリストを比較して、その差分を計算する
     fun setData(newData: FoodRecipe){
         val recipesDiffUtil = RecipesDiffUtil(recipes, newData.results)
-        val diffUtilREsult = DiffUtil.calculateDiff(recipesDiffUtil)
+        val diffUtilResult = DiffUtil.calculateDiff(recipesDiffUtil)
         recipes = newData.results
-        diffUtilREsult.dispatchUpdatesTo(this)
+        diffUtilResult.dispatchUpdatesTo(this)
     }
 }
