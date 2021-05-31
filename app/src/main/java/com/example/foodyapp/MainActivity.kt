@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    // APIKey : 85103093f86b4ebfbfda85266745cf78
+
     private var _binding : ActivityMainBinding? = null
     private val binding get() = _binding!!
     private lateinit var navController : NavController
