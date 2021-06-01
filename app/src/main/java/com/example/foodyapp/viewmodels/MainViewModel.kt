@@ -24,6 +24,8 @@ class MainViewModel @ViewModelInject constructor(
 
 
     /** ROOM DATABASE */
+
+    // Flowでは、asLiveDataを使うことで、LiveDataに変換することができる
     val readRecipes : LiveData<List<RecipesEntity>> = repository.local.readDatabase().asLiveData()
     private fun insertRecipes(recipesEntity: RecipesEntity) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -42,7 +44,7 @@ class MainViewModel @ViewModelInject constructor(
                 val response = repository.remote.getRecipes(queries)
                 recipesResponse.value = handleFoodRecipesResponse(response)
 
-                // データベースが空の場合に新しいデータをリクエストする
+               // 取得してきたデータをオフラインキャッシュする
                 val foodRecipe = recipesResponse.value!!.data
                 if(foodRecipe != null) {
                     offlineCacheRecipes(foodRecipe)
