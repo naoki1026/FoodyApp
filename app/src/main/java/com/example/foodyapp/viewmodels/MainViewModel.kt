@@ -1,4 +1,4 @@
-package com.example.foodyapp
+package com.example.foodyapp.viewmodels
 
 import android.app.Application
 import android.content.Context
@@ -8,6 +8,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.foodyapp.Repository
 import com.example.foodyapp.models.FoodRecipe
 import com.example.foodyapp.util.NetworkResult
 import kotlinx.coroutines.launch

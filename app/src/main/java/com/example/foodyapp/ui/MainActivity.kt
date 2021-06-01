@@ -11,6 +11,8 @@ import com.example.foodyapp.R
 import com.example.foodyapp.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+// ActivityやFragmentにInjectできるように@AndroidEntryPointのアノテーションを
+// 記述する必要がある
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
