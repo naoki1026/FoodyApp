@@ -11,11 +11,13 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.foodyapp.R
 import com.example.foodyapp.viewmodels.MainViewModel
 import com.example.foodyapp.adapters.RecipesAdapter
 import com.example.foodyapp.databinding.FragmentRecipesBinding
 import com.example.foodyapp.util.Constants.Companion.API_KEY
 import com.example.foodyapp.util.NetworkResult
+import com.example.foodyapp.util.observeOnce
 import com.example.foodyapp.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -43,7 +45,12 @@ class RecipesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentRecipesBinding.inflate(layoutInflater)
+//        _binding = FragmentRecipesBinding.inflate(layoutInflater)
+        _binding = FragmentRecipesBinding.inflate(inflater, container, false)
+
+        // Livedataを使用する際に以下を定義する必要がある
+        binding.lifecycleOwner = this
+        binding.mainViewModel = mainViewModel
         setUpRecyclerView()
         readDatabase()
         return binding.root
@@ -61,7 +68,9 @@ class RecipesFragment : Fragment() {
         // viewLifecycleOwnerを使用する
 
         // readRecipesはLiveDataであるため、情報が更新された場合にobserve以降の処理が行われる
-        mainViewModel.readRecipes.observe(viewLifecycleOwner, {database ->
+        // アプリインストール時に、requestとreadの両方が呼び出されてしまうため、
+        // extension functionのonserveOnceを使って、処理が一度しか行われないようにしている
+        mainViewModel.readRecipes.observeOnce(viewLifecycleOwner, {database ->
             lifecycleScope.launch {
                 if (database.isNotEmpty()) {
                     Log.d("RecipesFragment", "read databse called!")

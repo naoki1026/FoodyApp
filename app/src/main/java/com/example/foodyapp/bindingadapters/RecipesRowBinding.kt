@@ -18,6 +18,9 @@ class RecipesRowBinding {
         fun loadImageFromUrl(imageView: ImageView, imageUrl: String){
             imageView.load(imageUrl) {
                 crossfade(600)
+
+                // 画像データを取得できなかった場合に代わりの画像を表示させる
+                error(R.drawable.ic_error_placeholder)
             }
         }
 

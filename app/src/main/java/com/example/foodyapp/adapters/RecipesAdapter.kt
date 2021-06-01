@@ -1,5 +1,6 @@
 package com.example.foodyapp.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -51,5 +52,6 @@ class RecipesAdapter() : RecyclerView.Adapter<RecipesAdapter.MyViewHolder>() {
         val diffUtilResult = DiffUtil.calculateDiff(recipesDiffUtil)
         recipes = newData.results
         diffUtilResult.dispatchUpdatesTo(this)
+        Log.d("RecipesFragment", "finish read databse called!")
     }
 }
