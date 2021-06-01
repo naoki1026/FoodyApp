@@ -1,4 +1,4 @@
-package com.example.foodyapp
+package com.example.foodyapp.data
 
 import com.example.foodyapp.data.RemoteDataSource
 import dagger.hilt.android.scopes.ActivityRetainedScoped

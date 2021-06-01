@@ -1,4 +1,4 @@
-package com.example.foodyapp
+package com.example.foodyapp.data.database
 
 import androidx.room.TypeConverter
 import com.example.foodyapp.models.FoodRecipe

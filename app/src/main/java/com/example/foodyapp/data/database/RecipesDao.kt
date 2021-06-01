@@ -1,4 +1,4 @@
-package com.example.foodyapp
+package com.example.foodyapp.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert

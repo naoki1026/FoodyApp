@@ -1,12 +1,13 @@
-package com.example.foodyapp
+package com.example.foodyapp.data.database
 
-import android.content.Context
 import androidx.room.*
 
 @Database(entities = [RecipesEntity::class],
     version = 1,
     exportSchema = false)
-@TypeConverters
+
+// TypeConvertersの記述が漏れていた・・・
+@TypeConverters(RecipesTypeConverter::class)
 abstract class RecipesDatabase : RoomDatabase() {
 
     abstract fun recipesDao() : RecipesDao
