@@ -8,7 +8,9 @@ import javax.inject.Inject
 // アクティビティ存続構成の存続期間中存在する必要があるバインディングのスコープ注釈
 @ActivityRetainedScoped
 class Repository @Inject constructor(
-    remoteDataSource: RemoteDataSource
+    remoteDataSource: RemoteDataSource,
+    localDataSource: LocalDataSource
 ) {
     val remote = remoteDataSource
+    val local = localDataSource
 }

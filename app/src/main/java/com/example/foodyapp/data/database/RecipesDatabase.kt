@@ -9,6 +9,5 @@ import androidx.room.*
 // TypeConvertersの記述が漏れていた・・・
 @TypeConverters(RecipesTypeConverter::class)
 abstract class RecipesDatabase : RoomDatabase() {
-
     abstract fun recipesDao() : RecipesDao
 }
