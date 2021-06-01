@@ -73,9 +73,7 @@ class RecipesFragment : Fragment() {
         queries["addRecipeInformation"] = "true"
         queries["fillIngredients"] = "true"
         println("queries : ${queries}")
-
         return queries
-
     }
 
     private fun setUpRecyclerView(){
