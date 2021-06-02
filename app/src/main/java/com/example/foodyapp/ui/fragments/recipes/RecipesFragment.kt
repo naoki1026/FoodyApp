@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodyapp.R
 import com.example.foodyapp.viewmodels.MainViewModel
@@ -33,6 +34,7 @@ class RecipesFragment : Fragment() {
     private val  mAdapter  by lazy { RecipesAdapter() }
     private lateinit var mainViewModel : MainViewModel
     private lateinit var recipesViewModel: RecipesViewModel
+    private val args by navArgs<RecipesFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,8 +77,12 @@ class RecipesFragment : Fragment() {
         // アプリインストール時に、requestとreadの両方が呼び出されてしまうため、
         // extension functionのonserveOnceを使って、処理が一度しか行われないようにしている
         mainViewModel.readRecipes.observeOnce(viewLifecycleOwner, {database ->
+
+            // 非同期処理の範囲を制限するための機能
+            // ライフサイクルに依存できて、launchの場合はonDestroyの際に処理が行われない
+            // https://qiita.com/sokume2106/items/628d5c0296a56d47d5f3
             lifecycleScope.launch {
-                if (database.isNotEmpty()) {
+                if (database.isNotEmpty() && !args.backFromBottomSheet) {
                     Log.d("RecipesFragment", "read databse called!")
                     // 2つのリストを比較してその差分を算出する
                     mAdapter.setData(database[0].foodRecipe)
@@ -93,6 +99,7 @@ class RecipesFragment : Fragment() {
         Log.d("RecipesFragment", "requestAPI data called!")
         mainViewModel.getRecipes(recipesViewModel.applyQueries())
         mainViewModel.recipesResponse.observe(viewLifecycleOwner, { response ->
+            println("response : ${response}")
             when (response) {
                 is NetworkResult.Success -> {
                     hideShimmerEffect()

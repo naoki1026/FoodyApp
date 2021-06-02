@@ -17,6 +17,9 @@ import okhttp3.Dispatcher
 import retrofit2.Response
 import java.lang.Exception
 
+// ViewModel
+// ModelとViewの間を取り持ち、データを管理する部分
+
 class MainViewModel @ViewModelInject constructor(
     private val repository : Repository,
     application: Application
@@ -28,6 +31,9 @@ class MainViewModel @ViewModelInject constructor(
     // Flowでは、asLiveDataを使うことで、LiveDataに変換することができる
     val readRecipes : LiveData<List<RecipesEntity>> = repository.local.readDatabase().asLiveData()
     private fun insertRecipes(recipesEntity: RecipesEntity) =
+
+   // Dispatcher.IOは、メインスレッドの外部でディスクまたはネットワークのI/Oを実行する場合に適しており、
+        // Roomコンポーネントの使用、ファイルの読み書き、ネットワークオペレーションの実行等である
         viewModelScope.launch(Dispatchers.IO) {
             repository.local.insertRecipes(recipesEntity)
         }

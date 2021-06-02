@@ -1,5 +1,8 @@
 package com.example.foodyapp.data
 
+// Repository
+// ViewModelとModelを疎結合にするための役割（必須ではない）
+
 import android.content.Context
 import androidx.datastore.DataStore
 import androidx.datastore.preferences.*
@@ -44,7 +47,6 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
     }
 
     val readMealAndDietType : Flow<MealAndDietType> = dataStore.data
-
             // 例外処理
         .catch{ exception ->
             if (exception is IOException) {
@@ -61,7 +63,9 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
             val selectedMealTypeId = preferences[PreferenceKeys.selectedMealTypeId] ?: 0
             val selectedDietType = preferences[PreferenceKeys.selectedDietType] ?: DEFAULT_DIET_TYPE
             val selectedDietTypeID = preferences[PreferenceKeys.selectedDietTypeId] ?: 0
-            MealAndDietType(selectedMealType, selectedMealTypeId, selectedDietType, selectedMealTypeId)
+
+            // selectedDietTypeIDの代わりにselectedMealTypeIdが登録されており、チップに反映されていなかった
+            MealAndDietType(selectedMealType, selectedMealTypeId, selectedDietType, selectedDietTypeID)
         }
 }
 

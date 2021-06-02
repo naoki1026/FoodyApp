@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="@string/meat_type"
+        android:text="@string/meal_type"
         android:scrollbars="none"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -68,7 +68,7 @@
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Main Course"
+                    android:text="main course"
 
                     />
 
@@ -105,7 +105,7 @@
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="finger food" />
+                    android:text="fingerfood" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/dessertChip"
@@ -187,6 +187,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.chip.ChipGroup
+                android:id="@+id/dietTypeChipGroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:checkedChip="@+id/veganChip"
@@ -220,7 +221,7 @@
                     style="@style/CustomChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Daily Free" />
+                    android:text="Dairy Free" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/gultenFreeChip"
@@ -248,7 +249,7 @@
     </HorizontalScrollView>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/applyButton"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
