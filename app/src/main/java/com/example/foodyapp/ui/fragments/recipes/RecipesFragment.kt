@@ -1,6 +1,7 @@
 package com.example.foodyapp.ui.fragments.recipes
 
 import android.app.Application
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,11 +11,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodyapp.R
 import com.example.foodyapp.viewmodels.MainViewModel
 import com.example.foodyapp.adapters.RecipesAdapter
 import com.example.foodyapp.databinding.FragmentRecipesBinding
+import com.example.foodyapp.ui.fragments.recipes.bottomsheet.RecipesBottomSheet
 import com.example.foodyapp.util.Constants.Companion.API_KEY
 import com.example.foodyapp.util.NetworkResult
 import com.example.foodyapp.util.observeOnce
@@ -45,14 +48,15 @@ class RecipesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        _binding = FragmentRecipesBinding.inflate(layoutInflater)
-        _binding = FragmentRecipesBinding.inflate(inflater, container, false)
-
+        _binding = FragmentRecipesBinding.inflate(layoutInflater, container, false)
         // Livedataを使用する際に以下を定義する必要がある
         binding.lifecycleOwner = this
         binding.mainViewModel = mainViewModel
         setUpRecyclerView()
         readDatabase()
+        binding.recipesFab.setOnClickListener {
+            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+        }
         return binding.root
     }
 
