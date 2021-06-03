@@ -1,8 +1,10 @@
 package com.example.foodyapp.viewmodels
 
 import android.app.Application
+import android.widget.Toast
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.foodyapp.data.DataStoreRepository
 import com.example.foodyapp.util.Constants
@@ -32,7 +34,12 @@ class RecipesViewModel @ViewModelInject constructor
     private var mealType = DEFAULT_MEAL_TYPE
     private var dietType = DEFAULT_DIET_TYPE
 
+    var networkStatus = false
+    var backOnline = false
+
     val readMealAndDietType = dataStoreRepository.readMealAndDietType
+    val readBackOnline = dataStoreRepository.readBackOnline.asLiveData()
+
     fun saveMealAndDietType(mealType: String, mealTypeId: Int, dietType: String, dietTypeId: Int)
 
     // Dispatcher.IOは、メインスレッドの外部でディスクまたはネットワークのI/Oを実行する場合に適しており、
@@ -40,6 +47,11 @@ class RecipesViewModel @ViewModelInject constructor
     = viewModelScope.launch(Dispatchers.IO) {
         dataStoreRepository.saveMealAndDietType(mealType, mealTypeId, dietType, dietTypeId)
     }
+
+    fun saveBackOnline(backOnline : Boolean) =
+        viewModelScope.launch(Dispatchers.IO){
+            dataStoreRepository.saveBackOnline(backOnline)
+        }
 
     fun applyQueries(): HashMap<String, String>{
         val queries : HashMap<String, String> = HashMap()
@@ -49,9 +61,6 @@ class RecipesViewModel @ViewModelInject constructor
             readMealAndDietType.collect {  value ->
                 mealType = value.selectedMealType
                 dietType = value.selectedDietType
-
-                // OK
-                println("applyQueries mealType : ${mealType}, dietType : ${dietType}")
             }
         }
 
@@ -61,8 +70,18 @@ class RecipesViewModel @ViewModelInject constructor
         queries[QUERY_DIET] = dietType
         queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
         queries[QUERY_FILL_INGREDIENTS] = "true"
-
-        println("After readMealAndDietType queries : ${queries}")
         return queries
+    }
+
+    // ネットワークにつながらなかった場合、つながった場合
+    fun showNetworkStatus(){
+        if(!networkStatus){
+            Toast.makeText(getApplication(), "No Internet Connection", Toast.LENGTH_SHORT ).show()
+            saveBackOnline(true)
+        } else if (networkStatus){
+            if(backOnline){
+                Toast.makeText(getApplication(), "We're back on.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

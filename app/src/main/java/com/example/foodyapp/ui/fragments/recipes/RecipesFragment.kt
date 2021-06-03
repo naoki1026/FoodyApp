@@ -2,6 +2,7 @@ package com.example.foodyapp.ui.fragments.recipes
 
 import android.app.Application
 import android.content.Intent
+import android.net.Network
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -20,12 +21,16 @@ import com.example.foodyapp.adapters.RecipesAdapter
 import com.example.foodyapp.databinding.FragmentRecipesBinding
 import com.example.foodyapp.ui.fragments.recipes.bottomsheet.RecipesBottomSheet
 import com.example.foodyapp.util.Constants.Companion.API_KEY
+import com.example.foodyapp.util.NetworkListener
 import com.example.foodyapp.util.NetworkResult
 import com.example.foodyapp.util.observeOnce
 import com.example.foodyapp.viewmodels.RecipesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class RecipesFragment : Fragment() {
 
@@ -35,6 +40,7 @@ class RecipesFragment : Fragment() {
     private lateinit var mainViewModel : MainViewModel
     private lateinit var recipesViewModel: RecipesViewModel
     private val args by navArgs<RecipesFragmentArgs>()
+    private lateinit var networkListener: NetworkListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +60,32 @@ class RecipesFragment : Fragment() {
         // Livedataを使用する際に以下を定義する必要がある
         binding.lifecycleOwner = this
         binding.mainViewModel = mainViewModel
+
         setUpRecyclerView()
-        readDatabase()
+
+        recipesViewModel.readBackOnline.observe(viewLifecycleOwner, {
+            recipesViewModel.backOnline = it
+        })
+
+        // これは他のアプリでも使える
+        // ネットワークが使える状態になったときにtrueとなる
+        lifecycleScope.launch {
+            networkListener = NetworkListener()
+            networkListener.checkNetworkAvailability(requireContext())
+                .collect { status ->
+                    Log.d("NetworkListener", status.toString())
+                    recipesViewModel.networkStatus = status
+                    recipesViewModel.showNetworkStatus()
+                    readDatabase()
+                }
+        }
+
         binding.recipesFab.setOnClickListener {
-            findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+            if(recipesViewModel.networkStatus){
+                findNavController().navigate(R.id.action_recipesFragment_to_recipesBottomSheet)
+            } else {
+                recipesViewModel.showNetworkStatus()
+            }
         }
         return binding.root
     }
@@ -98,8 +126,6 @@ class RecipesFragment : Fragment() {
     private fun requestApiData(){
         Log.d("RecipesFragment", "requestAPI data called!")
         mainViewModel.getRecipes(recipesViewModel.applyQueries())
-
-
         mainViewModel.recipesResponse.observe(viewLifecycleOwner, { response ->
 
             when (response) {
@@ -112,9 +138,8 @@ class RecipesFragment : Fragment() {
                 is NetworkResult.Error -> {
                     hideShimmerEffect()
                     loadDataFromCache()
-                    response.data?.let {
-                        Toast.makeText(requireContext(), response.message.toString(), Toast.LENGTH_SHORT).show()
-                    }
+                    // response.dataが空の場合は、以下のトーストを表示しないように実装されていた
+                    Toast.makeText(requireContext(), response.message.toString(), Toast.LENGTH_SHORT).show()
                 }
                 is NetworkResult.Loading -> {
                     showShimmerEffect()
