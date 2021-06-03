@@ -64,6 +64,8 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
             val selectedDietType = preferences[PreferenceKeys.selectedDietType] ?: DEFAULT_DIET_TYPE
             val selectedDietTypeID = preferences[PreferenceKeys.selectedDietTypeId] ?: 0
 
+            println("readMealAndDietType map : ${selectedMealType}, ${selectedDietType}")
+
             // selectedDietTypeIDの代わりにselectedMealTypeIdが登録されており、チップに反映されていなかった
             MealAndDietType(selectedMealType, selectedMealTypeId, selectedDietType, selectedDietTypeID)
         }

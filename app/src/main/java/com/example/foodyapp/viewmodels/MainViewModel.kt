@@ -41,11 +41,13 @@ class MainViewModel @ViewModelInject constructor(
     /** RETROFIT */
     var recipesResponse : MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
     fun getRecipes(queries: Map<String, String>) = viewModelScope.launch {
+        println("getRecipes : ${queries}")
         getRecipesSafeCall(queries)
     }
     
     private suspend fun getRecipesSafeCall(queries: Map<String, String>) {
         if (hasInternetConnection()) {
+            println("hasInternetConnection() : ${hasInternetConnection()}")
             try {
                 val response = repository.remote.getRecipes(queries)
                 recipesResponse.value = handleFoodRecipesResponse(response)

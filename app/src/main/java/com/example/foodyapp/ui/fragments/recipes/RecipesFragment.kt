@@ -70,18 +70,18 @@ class RecipesFragment : Fragment() {
 
     // データベースにデータが存在する場合は
     private fun readDatabase() {
-        // Fragmentではthisを使用するとパフォーマンスが低下してしまう可能性があるため、
-        // viewLifecycleOwnerを使用する
-
-        // readRecipesはLiveDataであるため、情報が更新された場合にobserve以降の処理が行われる
-        // アプリインストール時に、requestとreadの両方が呼び出されてしまうため、
-        // extension functionのonserveOnceを使って、処理が一度しか行われないようにしている
-        mainViewModel.readRecipes.observeOnce(viewLifecycleOwner, {database ->
-
             // 非同期処理の範囲を制限するための機能
             // ライフサイクルに依存できて、launchの場合はonDestroyの際に処理が行われない
             // https://qiita.com/sokume2106/items/628d5c0296a56d47d5f3
+            // lifecycleScope.launch {の位置がおかしかったため、2回ボタンを押さないと反映されないようになっていた
             lifecycleScope.launch {
+                // Fragmentではthisを使用するとパフォーマンスが低下してしまう可能性があるため、
+                // viewLifecycleOwnerを使用する
+
+                // readRecipesはLiveDataであるため、情報が更新された場合にobserve以降の処理が行われる
+                // アプリインストール時に、requestとreadの両方が呼び出されてしまうため、
+                // extension functionのonserveOnceを使って、処理が一度しか行われないようにしている
+                mainViewModel.readRecipes.observeOnce(viewLifecycleOwner, {database ->
                 if (database.isNotEmpty() && !args.backFromBottomSheet) {
                     Log.d("RecipesFragment", "read databse called!")
                     // 2つのリストを比較してその差分を算出する
@@ -90,16 +90,18 @@ class RecipesFragment : Fragment() {
                 } else {
                     requestApiData()
                 }
-            }
-        })
+            })
+        }
     }
 
     // FoodAPIからデータを取得する
     private fun requestApiData(){
         Log.d("RecipesFragment", "requestAPI data called!")
         mainViewModel.getRecipes(recipesViewModel.applyQueries())
+
+
         mainViewModel.recipesResponse.observe(viewLifecycleOwner, { response ->
-            println("response : ${response}")
+
             when (response) {
                 is NetworkResult.Success -> {
                     hideShimmerEffect()
