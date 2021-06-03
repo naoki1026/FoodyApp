@@ -4,6 +4,7 @@ package com.example.foodyapp.data
 // ViewModelとModelを疎結合にするための役割（必須ではない）
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.DataStore
 import androidx.datastore.preferences.*
 import com.example.foodyapp.util.Constants.Companion.DEFAULT_DIET_TYPE
@@ -76,6 +77,7 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
             // selectedDietTypeIDの代わりにselectedMealTypeIdが登録されており、チップに反映されていなかった
             MealAndDietType(selectedMealType, selectedMealTypeId, selectedDietType, selectedDietTypeID)
         }
+
     val readBackOnline : Flow<Boolean> = dataStore.data
         .catch { exception ->
             if (exception is IOException){
@@ -86,6 +88,7 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
         }
         .map { preferences ->
             val backOnline = preferences[PreferenceKeys.backOnline] ?: false
+            Log.d("NetworkListener", "backOnline : ${backOnline}")
             backOnline
         }
 }

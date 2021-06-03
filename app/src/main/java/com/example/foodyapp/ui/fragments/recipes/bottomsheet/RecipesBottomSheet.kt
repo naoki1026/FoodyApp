@@ -51,7 +51,6 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
             val selectedMealType = chip.text.toString().lowercase(Locale.ROOT)
             mealTypeChip = selectedMealType
             mealTypeChipId = selectedChipId
-            println("${mealTypeChip}, ${mealTypeChipId}")
         }
 
         binding.dietTypeChipGroup.setOnCheckedChangeListener {group, selectedChipId ->
@@ -59,12 +58,9 @@ class RecipesBottomSheet : BottomSheetDialogFragment() {
             val selectedDietType = chip.text.toString().lowercase(Locale.ROOT)
             dietTypeChip = selectedDietType
             dietTypeChipId = selectedChipId
-            println("${dietTypeChip}, ${dietTypeChipId}")
         }
 
         binding.applyButton.setOnClickListener {
-
-            println("saveMealAndDietType : ${mealTypeChip}, ${mealTypeChipId}, ${dietTypeChip}, ${dietTypeChipId}")
             recipesViewModel.saveMealAndDietType(
                 mealTypeChip,
                 mealTypeChipId,

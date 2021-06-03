@@ -3,4 +3,26 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="meal_type">Meal Type</string>
+    <string name="diet_type">Diet Type</string>
+    <string name="main_course">main course</string>
+    <string name="bread">bread</string>
+    <string name="marinade">marinade</string>
+    <string name="side_dish">side dish</string>
+    <string name="breakfast">breakfast</string>
+    <string name="fingerfood">fingerfood</string>
+    <string name="dessert">dessert</string>
+    <string name="soup">soup</string>
+    <string name="snack">snack</string>
+    <string name="appetizer">appetizer</string>
+    <string name="beverage">beverage</string>
+    <string name="drink">drink</string>
+    <string name="salad">salad</string>
+    <string name="sauce">sauce</string>
+    <string name="vegan">Vegan</string>
+    <string name="vegetarian">Vegetarian</string>
+    <string name="ketogenic">Ketogenic</string>
+    <string name="dairy_free">Dairy Free</string>
+    <string name="gulten_free">Gulten Free</string>
+    <string name="paleo">Paleo</string>
+    <string name="lacto_vegetarian">Lacto-Vegetarian</string>
 </resources>

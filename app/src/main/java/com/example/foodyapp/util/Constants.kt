@@ -5,9 +5,16 @@ class Constants {
     // シングルトンで外部のクラスにより変更することができない唯一の存在のこと
     companion object {
         const val BASE_URL = "https://api.spoonacular.com"
-        const val API_KEY = "a5889925b67e47dc8735a7689c3196e8"
+        const val API_KEY = "c8b9ca1f6edf400484c2ab3099b18001"
+
+        // naoki.arakawa1026 85103093f86b4ebfbfda85266745cf78
+        // naoki.arakawa10266201 a5889925b67e47dc8735a7689c3196e8
+        // naoki.arakawa1026.1  c8b9ca1f6edf400484c2ab3099b18001
+
+        // API Query Keys
+        const val QUERY_SEARCH = "query"
         const val QUERY_NUMBER = "number"
-        const val QUERY_API_KET = "apiKey"
+        const val QUERY_API_KEY = "apiKey"
         const val QUERY_TYPE = "type"
         const val QUERY_DIET = "diet"
         const val QUERY_ADD_RECIPE_INFORMATION = "addRecipeInformation"

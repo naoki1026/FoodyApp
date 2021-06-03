@@ -1,8 +1,13 @@
 package com.example.foodyapp.models
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+//以下のアノテーションをつけないと画面遷移する際にエラーにななってしまう
+// L73
+@Parcelize
 data class ExtendedIngredient(
     @SerializedName("amount")
     val amount: Double,
@@ -16,4 +21,4 @@ data class ExtendedIngredient(
     val original: String,
     @SerializedName("unit")
     val unit: String
-)
+) : Parcelable

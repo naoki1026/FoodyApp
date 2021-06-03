@@ -7,16 +7,16 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.foodyapp.data.DataStoreRepository
-import com.example.foodyapp.util.Constants
 import com.example.foodyapp.util.Constants.Companion.API_KEY
 import com.example.foodyapp.util.Constants.Companion.DEFAULT_DIET_TYPE
 import com.example.foodyapp.util.Constants.Companion.DEFAULT_MEAL_TYPE
 import com.example.foodyapp.util.Constants.Companion.DEFAULT_RECIPES_NUMBER
 import com.example.foodyapp.util.Constants.Companion.QUERY_ADD_RECIPE_INFORMATION
-import com.example.foodyapp.util.Constants.Companion.QUERY_API_KET
+import com.example.foodyapp.util.Constants.Companion.QUERY_API_KEY
 import com.example.foodyapp.util.Constants.Companion.QUERY_DIET
 import com.example.foodyapp.util.Constants.Companion.QUERY_FILL_INGREDIENTS
 import com.example.foodyapp.util.Constants.Companion.QUERY_NUMBER
+import com.example.foodyapp.util.Constants.Companion.QUERY_SEARCH
 import com.example.foodyapp.util.Constants.Companion.QUERY_TYPE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -65,9 +65,19 @@ class RecipesViewModel @ViewModelInject constructor
         }
 
         queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
-        queries[QUERY_API_KET] = API_KEY
+        queries[QUERY_API_KEY] = API_KEY
         queries[QUERY_TYPE] = mealType
         queries[QUERY_DIET] = dietType
+        queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
+        queries[QUERY_FILL_INGREDIENTS] = "true"
+        return queries
+    }
+
+    fun applySearchQuery(searchQuery: String) : HashMap<String, String> {
+        val queries : HashMap<String, String> = HashMap()
+        queries[QUERY_SEARCH] = searchQuery
+        queries[QUERY_NUMBER] = DEFAULT_RECIPES_NUMBER
+        queries[QUERY_API_KEY] = API_KEY
         queries[QUERY_ADD_RECIPE_INFORMATION] = "true"
         queries[QUERY_FILL_INGREDIENTS] = "true"
         return queries
@@ -81,6 +91,9 @@ class RecipesViewModel @ViewModelInject constructor
         } else if (networkStatus){
             if(backOnline){
                 Toast.makeText(getApplication(), "We're back on.", Toast.LENGTH_SHORT).show()
+
+                // ここでfalseにすることで、上記のトーストが表示されないようにする
+                saveBackOnline(false)
             }
         }
     }
