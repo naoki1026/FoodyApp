@@ -25,6 +25,7 @@ import javax.inject.Inject
 
 // クラス自体のインスタンス化、つまりコンストラクタの引数に対して注入できる
 // プライマリコンストラクタの前に@Injectをつけることで引数に対して効果を発揮する
+
 @ActivityRetainedScoped
 class DataStoreRepository @Inject constructor(@ApplicationContext private val context: Context) {
     private object PreferenceKeys {

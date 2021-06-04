@@ -8,6 +8,7 @@ import com.example.foodyapp.util.Constants
 
 // テーブルクラス
 // Entityは実体という意味
+
 @Entity(tableName = Constants.FAVORITE_RECIPES_TABLE)
 class FavoriteEntity(
     @PrimaryKey(autoGenerate = true)

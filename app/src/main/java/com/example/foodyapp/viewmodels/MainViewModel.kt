@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.foodyapp.data.Repository
+import com.example.foodyapp.data.database.entities.FavoriteEntity
 import com.example.foodyapp.data.database.entities.RecipesEntity
 import com.example.foodyapp.models.FoodRecipe
 import com.example.foodyapp.util.NetworkResult
@@ -25,15 +26,34 @@ class MainViewModel @ViewModelInject constructor(
 
 
     /** ROOM DATABASE */
+    /** Recipe */
 
     // Flowでは、asLiveDataを使うことで、LiveDataに変換することができる
-    val readRecipes : LiveData<List<RecipesEntity>> = repository.local.readDatabase().asLiveData()
-    private fun insertRecipes(recipesEntity: RecipesEntity) =
+    val readRecipes : LiveData<List<RecipesEntity>> = repository.local.readRecipes().asLiveData()
 
+    private fun insertRecipes(recipesEntity: RecipesEntity) =
    // Dispatcher.IOは、メインスレッドの外部でディスクまたはネットワークのI/Oを実行する場合に適しており、
         // Roomコンポーネントの使用、ファイルの読み書き、ネットワークオペレーションの実行等である
         viewModelScope.launch(Dispatchers.IO) {
             repository.local.insertRecipes(recipesEntity)
+        }
+
+    /** Favorite */
+    val readFavoriteEntity : LiveData<List<FavoriteEntity>> = repository.local.readFavoriteRecipes().asLiveData()
+
+     fun insertFavorites(favoriteEntity: FavoriteEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.insertFavoriteRecipes(favoriteEntity)
+        }
+
+     fun deleteFavoriteRecipe(favoriteEntity: FavoriteEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.deleteFavoriteRecipes(favoriteEntity)
+        }
+
+    private fun deleteAllFavoriteRecipes() =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.deleteAllFavoriteRecipes()
         }
 
     /** RETROFIT */

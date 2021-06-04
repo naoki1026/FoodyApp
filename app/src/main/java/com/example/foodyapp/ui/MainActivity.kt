@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     private lateinit var navController : NavController
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)

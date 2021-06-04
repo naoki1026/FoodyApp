@@ -8,6 +8,7 @@ import com.example.foodyapp.util.Constants.Companion.RECIPES_TABLE
 
 // テーブルクラス
 // Entityは実体という意味
+
 @Entity(tableName = RECIPES_TABLE)
 class RecipesEntity (
     var foodRecipe : FoodRecipe

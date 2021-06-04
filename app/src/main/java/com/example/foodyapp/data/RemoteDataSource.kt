@@ -7,7 +7,8 @@ import javax.inject.Inject
 
 // クラス自体のインスタンス化、つまりコンストラクタの引数に対して注入できる
 // プライマリコンストラクタの前に@Injectをつけることで引数に対して効果を発揮する
-//
+// Repositoryが依存するクラスで、LocalDataSourceとRemoteDataSourceに分けている
+
 class RemoteDataSource @Inject constructor(
     private val foodRecipesApi: FoodRecipesApi
 ) {

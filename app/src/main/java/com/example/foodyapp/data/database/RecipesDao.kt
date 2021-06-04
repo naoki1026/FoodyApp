@@ -14,7 +14,7 @@ interface RecipesDao {
     suspend fun insertRecipes(recipesEntity : RecipesEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavoriteRecipe(favoritiesEntity : FavoriteEntity)
+    suspend fun insertFavoriteRecipe(favoritesEntity : FavoriteEntity)
 
     // コルーチンの一種で、返す値が1つのみのsuspend関数とは異なり、
     // 複数の値を順次出力することができる。例えばデータベースからリアルタイムで更新情報を
@@ -26,7 +26,7 @@ interface RecipesDao {
     fun readFavoriteRecipes() : Flow<List<FavoriteEntity>>
 
     @Delete
-    suspend fun deleteFavoriteRecipe(favoritiesEntity: FavoriteEntity)
+    suspend fun deleteFavoriteRecipe(favoritesEntity: FavoriteEntity)
 
     @Query("DELETE FROM favorite_recipes_table")
     suspend fun deleteAllFavoriteRecipes()
