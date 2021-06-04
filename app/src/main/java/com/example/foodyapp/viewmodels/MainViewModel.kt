@@ -4,17 +4,14 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.foodyapp.data.Repository
-import com.example.foodyapp.data.database.RecipesEntity
+import com.example.foodyapp.data.database.entities.RecipesEntity
 import com.example.foodyapp.models.FoodRecipe
 import com.example.foodyapp.util.NetworkResult
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
-import okhttp3.Dispatcher
 import retrofit2.Response
 import java.lang.Exception
 

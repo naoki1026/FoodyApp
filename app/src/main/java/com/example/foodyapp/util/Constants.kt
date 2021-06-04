@@ -5,7 +5,9 @@ class Constants {
     // シングルトンで外部のクラスにより変更することができない唯一の存在のこと
     companion object {
         const val BASE_URL = "https://api.spoonacular.com"
+        const val BASE_IMAGE_URL = "https://spoonacular.com/cdn/ingredients_100x100/"
         const val API_KEY = "c8b9ca1f6edf400484c2ab3099b18001"
+        const val RECIPE_RESULT_KEY = "recipeBundle"
 
         // naoki.arakawa1026 85103093f86b4ebfbfda85266745cf78
         // naoki.arakawa10266201 a5889925b67e47dc8735a7689c3196e8
@@ -23,6 +25,7 @@ class Constants {
         // ROOM DATABASE
         const val DATABASE_NAME = "recipe_database"
         const val RECIPES_TABLE = "recipes_table"
+        const val FAVORITE_RECIPES_TABLE = "favorite_recipes_table"
 
         // Bottom Sheet and Preferences
         const val DEFAULT_RECIPES_NUMBER = "50"
@@ -37,6 +40,5 @@ class Constants {
         const val PREFERENCES_DIET_TYPE = "dietType"
         const val PREFERENCES_DIET_TYPE_ID = "dietTypeId"
         const val PREFERENCES_BACK_ONLINE = "backOnline"
-
     }
 }

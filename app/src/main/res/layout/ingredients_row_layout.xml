@@ -24,7 +24,6 @@
         android:id="@+id/ingredientBackground"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/cardBackgroundColor"
         android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +39,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/ingredientImageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:layout_constraintBottom_toBottomOf="parent"

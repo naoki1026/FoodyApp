@@ -10,6 +10,8 @@ import coil.load
 import com.example.foodyapp.R
 import com.example.foodyapp.databinding.FragmentOverviewBinding
 import com.example.foodyapp.models.Result
+import com.example.foodyapp.util.Constants
+import com.example.foodyapp.util.Constants.Companion.RECIPE_RESULT_KEY
 import org.jsoup.Jsoup
 
 class OverviewFragment : Fragment() {
@@ -23,7 +25,7 @@ class OverviewFragment : Fragment() {
     ): View? {
         _binding = FragmentOverviewBinding.inflate(inflater, container, false)
         val args = arguments
-        val myBundle : Result? = args?.getParcelable("recipeBundle")
+        val myBundle : Result? = args?.getParcelable(RECIPE_RESULT_KEY)
         binding.mainImageView.load(myBundle?.image)
         binding.titleTextView.text = myBundle?.title
         binding.likeTextView.text = myBundle?.aggregateLikes.toString()
