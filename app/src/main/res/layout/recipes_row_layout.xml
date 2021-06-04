@@ -69,7 +69,7 @@
                     android:layout_marginTop="6dp"
                     android:ellipsize="end"
                     android:lines="3"
-                    android:text="@{result.summary}"
+                    parseHtml="@{result.summary}"
                     android:textColor="@color/darkGray"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="@+id/titleTextView"
@@ -87,7 +87,7 @@
                     app:tint="@color/red" />
 
                 <TextView
-                    android:id="@+id/heartTextView"
+                    android:id="@+id/likeTextView"
                     setNumberOfLikes="@{result.aggregateLikes}"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

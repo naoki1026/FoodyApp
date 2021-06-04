@@ -25,4 +25,9 @@
     <string name="gulten_free">Gulten Free</string>
     <string name="paleo">Paleo</string>
     <string name="lacto_vegetarian">Lacto-Vegetarian</string>
+    <string name="cheap">Cheap</string>
+    <string name="gulten">Gulten</string>
+    <string name="vegitarian">Vegitarian</string>
+    <string name="healthy">Healthy</string>
+    <string name="dairy_food">Dairy Food</string>
 </resources>
