@@ -28,7 +28,6 @@ class InstructionsFragment : Fragment() {
 
         binding.instructionsWebView.webViewClient = object : WebViewClient() {}
         val webSiteUrl : String = myBundle!!.sourceUrl
-        println(webSiteUrl)
         binding.instructionsWebView.loadUrl(webSiteUrl)
 
         return binding.root
