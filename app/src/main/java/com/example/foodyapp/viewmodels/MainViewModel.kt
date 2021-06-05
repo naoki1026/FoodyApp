@@ -83,6 +83,7 @@ class MainViewModel @ViewModelInject constructor(
         }
     }
 
+    // インターネットの接続状況をチェックして、取得できた場合はオフラインキャッシュを行う
     private suspend fun getRecipesSafeCall(queries: Map<String, String>) {
         if (hasInternetConnection()) {
             try {
@@ -108,11 +109,15 @@ class MainViewModel @ViewModelInject constructor(
         insertRecipes(recipesEntity)
     }
 
+    // レスポンスの状態をチェックする
     private fun handleFoodRecipesResponse(response: Response<FoodRecipe>) : NetworkResult<FoodRecipe>?{
         when {
             response.message().toString().contains("timeout") -> {
                 return NetworkResult.Error("Timeout")
             }
+
+            // 402　PaymentRequired クライアントが支払いを行っていないため、
+            // APIの取得ができない状態
             response.code() == 402 -> {
                 return NetworkResult.Error("API Key Limited.")
             }
@@ -129,6 +134,7 @@ class MainViewModel @ViewModelInject constructor(
         }
     }
 
+    // インターネットヘの接続状況をチェックする
     private fun hasInternetConnection() : Boolean {
         val connectivityManager = getApplication<Application>().getSystemService(
             Context.CONNECTIVITY_SERVICE
@@ -136,8 +142,14 @@ class MainViewModel @ViewModelInject constructor(
         val activeNetwork = connectivityManager.activeNetwork ?: return false
         val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
         return when {
+
+            // WiFiだった場合
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+
+            // 携帯通信だった場合
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+
+            // 有線ネットワークだった場合
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
             else -> false
         }

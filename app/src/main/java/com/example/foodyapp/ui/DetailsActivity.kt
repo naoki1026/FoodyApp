@@ -90,6 +90,7 @@ class DetailsActivity : AppCompatActivity() {
                         Log.d("DetailACtivity", "args : ${args.result.recipeId}")
                     if (savedRecipe.result.recipeId == args.result.recipeId ){
                         changeMenuItemColor(menuItem, R.color.yellow)
+                        savedRecipeId = savedRecipe.id
                         recipeSaved = true
                     } else {
                         changeMenuItemColor(menuItem, R.color.white)

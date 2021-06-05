@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="favoritesEntity"
+            type="com.example.foodyapp.data.database.entities.FavoriteEntity" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/favoriteRecipesRowLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/recipesRpwLayout"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/favoriteRowCardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/lightMediumGray"
+            app:strokeWidth="1dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/favoriteRecipeImageView"
+                    android:layout_width="200dp"
+                    android:layout_height="0dp"
+                    android:scaleType="centerCrop"
+                    loadImageFromUrl="@{favoritesEntity.result.image}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/favoriteTitleTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:text="@{favoritesEntity.result.title}"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/courgette"
+                    android:gravity="center_vertical"
+                    android:maxLines="2"
+                    android:textColor="@color/darker"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.503"
+                    app:layout_constraintStart_toEndOf="@+id/favoriteRecipeImageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/favoriteDescriptionTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{favoritesEntity.result.summary}"
+                    android:layout_marginTop="6dp"
+                    android:ellipsize="end"
+                    android:lines="3"
+                    android:textColor="@color/darkGray"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/favoriteTitleTextView"
+                    app:layout_constraintStart_toStartOf="@+id/favoriteTitleTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/favoriteTitleTextView" />
+
+                <ImageView
+                    android:id="@+id/favoriteHeartImageView"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="@+id/favoriteDescriptionTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/favoriteDescriptionTextView"
+                    app:srcCompat="@drawable/ic_heart"
+                    app:tint="@color/red" />
+
+                <TextView
+                    android:id="@+id/favoriteLikeTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    setNumberOfLikes="@{favoritesEntity.result.aggregateLikes}"
+                    android:text="1000"
+                    android:textAlignment="center"
+                    android:textColor="@color/red"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/favoriteHeartImageView"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/favoriteHeartImageView"
+                    app:layout_constraintTop_toBottomOf="@+id/favoriteHeartImageView" />
+
+                <ImageView
+                    android:id="@+id/favoriteClockImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toEndOf="@+id/favoriteHeartImageView"
+                    app:layout_constraintTop_toBottomOf="@+id/favoriteDescriptionTextView"
+                    app:srcCompat="@drawable/ic_clock"
+                    app:tint="@color/yellow" />
+
+                <TextView
+                    android:id="@+id/favoriteClockTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:text="0"
+                    setNumberOfLikes="@{favoritesEntity.result.readyInMinutes}"
+                    android:textAlignment="center"
+                    android:textColor="@color/yellow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/favoriteClockImageView"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/favoriteClockImageView"
+                    app:layout_constraintTop_toBottomOf="@+id/favoriteClockImageView" />
+
+                <ImageView
+                    android:id="@+id/favoriteLeafImageView"
+                    applyVeganColor="@{favoritesEntity.result.vegan}"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintEnd_toEndOf="@+id/favoriteLeafTextView"
+                    app:layout_constraintStart_toStartOf="@+id/favoriteLeafTextView"
+                    app:layout_constraintTop_toBottomOf="@+id/favoriteDescriptionTextView"
+                    app:srcCompat="@drawable/ic_leaf" />
+
+                <TextView
+                    android:id="@+id/favoriteLeafTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="12dp"
+                    applyVeganColor="@{favoritesEntity.result.vegan}"
+                    android:text="Vegan"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/favoriteClockImageView"
+                    app:layout_constraintTop_toBottomOf="@+id/favoriteLeafImageView" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

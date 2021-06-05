@@ -2,6 +2,7 @@ package com.example.foodyapp.util
 
 import androidx.recyclerview.widget.DiffUtil
 
+// <T>にしてジェネリクス型のメソッドを定義している
 class RecipesDiffUtil<T>(
     private val oldList : List<T>,
     private val newList : List<T>
