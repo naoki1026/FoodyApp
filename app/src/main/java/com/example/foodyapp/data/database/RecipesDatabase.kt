@@ -2,11 +2,13 @@ package com.example.foodyapp.data.database
 
 import androidx.room.*
 import com.example.foodyapp.data.database.entities.FavoriteEntity
+import com.example.foodyapp.data.database.entities.FoodJokeEntity
 import com.example.foodyapp.data.database.entities.RecipesEntity
 
 // 抽象クラス
 // データベース全体の内容を記述する
-@Database(entities = [RecipesEntity::class, FavoriteEntity::class],
+@Database(
+    entities = [RecipesEntity::class, FavoriteEntity::class, FoodJokeEntity::class],
     version = 1,
     exportSchema = false)
 

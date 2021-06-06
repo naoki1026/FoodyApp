@@ -57,7 +57,7 @@ class RecipesFragment : Fragment(), SearchView.OnQueryTextListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentRecipesBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentRecipesBinding.inflate(inflater, container, false)
         // Livedataを使用する際に以下を定義する必要がある
         binding.lifecycleOwner = this
         binding.mainViewModel = mainViewModel

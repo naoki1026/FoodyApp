@@ -8,7 +8,9 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.example.foodyapp.data.Repository
 import com.example.foodyapp.data.database.entities.FavoriteEntity
+import com.example.foodyapp.data.database.entities.FoodJokeEntity
 import com.example.foodyapp.data.database.entities.RecipesEntity
+import com.example.foodyapp.models.FoodJoke
 import com.example.foodyapp.models.FoodRecipe
 import com.example.foodyapp.util.NetworkResult
 import kotlinx.coroutines.Dispatchers
@@ -56,9 +58,17 @@ class MainViewModel @ViewModelInject constructor(
             repository.local.deleteAllFavoriteRecipes()
         }
 
+    /** FoodJoke */
+    val readFoodJokeEntity : LiveData<List<FoodJokeEntity>> = repository.local.readFoodJoke().asLiveData()
+    fun insertFoodJoke(foodJokeEntity: FoodJokeEntity) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.local.insertFoodJoke(foodJokeEntity)
+        }
+
     /** RETROFIT */
     var recipesResponse : MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
     var searchedRecipesResponse : MutableLiveData<NetworkResult<FoodRecipe>> = MutableLiveData()
+    var foodJokeResponse : MutableLiveData<NetworkResult<FoodJoke>> = MutableLiveData()
 
     fun getRecipes(queries: Map<String, String>) = viewModelScope.launch {
         getRecipesSafeCall(queries)
@@ -66,6 +76,10 @@ class MainViewModel @ViewModelInject constructor(
 
     fun searchRecipes(searchQuery: Map<String, String>) = viewModelScope.launch {
         searchedRecipesSafeCall(searchQuery)
+    }
+
+    fun getFoodJoke(apiKey : String) = viewModelScope.launch {
+        getFoodJokeSafeCall(apiKey)
     }
 
     private suspend fun searchedRecipesSafeCall(searchQuery: Map<String, String>) {
@@ -83,6 +97,22 @@ class MainViewModel @ViewModelInject constructor(
         }
     }
 
+
+    private suspend fun getFoodJokeSafeCall(apiKey: String) {
+        foodJokeResponse.value = NetworkResult.Loading()
+
+        if (hasInternetConnection()) {
+            try {
+                val response = repository.remote.getFoodJoke(apiKey)
+                foodJokeResponse.value = handleFoodJokeResponse(response)
+            } catch (e: Exception) {
+                foodJokeResponse.value = NetworkResult.Error("Recipes not found.")
+            }
+        } else {
+            foodJokeResponse.value = NetworkResult.Error("No Internet connection.")
+        }
+    }
+
     // インターネットの接続状況をチェックして、取得できた場合はオフラインキャッシュを行う
     private suspend fun getRecipesSafeCall(queries: Map<String, String>) {
         if (hasInternetConnection()) {
@@ -97,7 +127,7 @@ class MainViewModel @ViewModelInject constructor(
                 }
 
             } catch (e: Exception) {
-                recipesResponse.value = NetworkResult.Error("Recupes not found.")
+                recipesResponse.value = NetworkResult.Error("Recipes not found.")
             }
         } else {
             recipesResponse.value = NetworkResult.Error("No Internet connection.")
@@ -127,6 +157,27 @@ class MainViewModel @ViewModelInject constructor(
             response.isSuccessful -> {
                 val foodRecipes = response.body()
                 return NetworkResult.Success(foodRecipes!!)
+            }
+            else -> {
+                return NetworkResult.Error(response.message())
+            }
+        }
+    }
+
+    private fun handleFoodJokeResponse(response: Response<FoodJoke>) : NetworkResult<FoodJoke>?{
+        when {
+            response.message().toString().contains("timeout") -> {
+                return NetworkResult.Error("Timeout")
+            }
+
+            // 402　PaymentRequired クライアントが支払いを行っていないため、
+            // APIの取得ができない状態
+            response.code() == 402 -> {
+                return NetworkResult.Error("API Key Limited.")
+            }
+            response.isSuccessful -> {
+                val foodJoke = response.body()
+                return NetworkResult.Success(foodJoke!!)
             }
             else -> {
                 return NetworkResult.Error(response.message())

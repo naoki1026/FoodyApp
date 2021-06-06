@@ -22,6 +22,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // setThemeを先に記述しないとクラッシュしてしまう
+        setTheme(R.style.AppTheme)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

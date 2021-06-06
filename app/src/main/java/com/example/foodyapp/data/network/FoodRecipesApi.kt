@@ -1,5 +1,6 @@
 package com.example.foodyapp.data.network
 
+import com.example.foodyapp.models.FoodJoke
 import com.example.foodyapp.models.FoodRecipe
 import retrofit2.Response
 import retrofit2.http.GET
@@ -18,4 +19,11 @@ interface FoodRecipesApi {
     suspend fun searchRecipes(
         @QueryMap searchQuery: Map<String, String>
     ) : Response<FoodRecipe>
+
+    @GET("food/jokes/random")
+    suspend fun getFoodJoke(
+
+        // エンドポイント（終点、終末点）が1つしかないため、@QueryMAPではなく@Queryを使用する
+        @Query ("apiKey") apiKey : String
+    ) : Response<FoodJoke>
 }

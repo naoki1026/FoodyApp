@@ -1,6 +1,7 @@
 package com.example.foodyapp.data
 
 import com.example.foodyapp.data.network.FoodRecipesApi
+import com.example.foodyapp.models.FoodJoke
 import com.example.foodyapp.models.FoodRecipe
 import retrofit2.Response
 import javax.inject.Inject
@@ -12,12 +13,20 @@ import javax.inject.Inject
 class RemoteDataSource @Inject constructor(
     private val foodRecipesApi: FoodRecipesApi
 ) {
+
+    /** Recipes */
     suspend fun getRecipes(queries: Map<String, String>) : Response<FoodRecipe> {
         return foodRecipesApi.getRecipes(queries)
     }
 
-    // search Recipes
     suspend fun searchRecipes(searchQuery : Map<String, String>) : Response<FoodRecipe> {
         return foodRecipesApi.searchRecipes(searchQuery)
     }
+
+    /** Joke */
+    suspend fun getFoodJoke(apiKey : String) : Response<FoodJoke> {
+
+        return foodRecipesApi.getFoodJoke(apiKey)
+    }
+
 }
