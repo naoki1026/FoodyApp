@@ -51,5 +51,6 @@
     // Actionbar
     <color name="statusBarColor">@color/colorPrimaryDark</color>
     <color name="contextualStatusBarColor">@color/darker</color>
+    <color name="testColor">#F44336</color>
 
 </resources>

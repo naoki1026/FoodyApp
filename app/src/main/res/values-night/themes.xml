@@ -9,8 +9,6 @@
 
         <!-- アクションバーを表示している時の二段目のバーの色を変更する -->
         <item name="actionModeBackground">@color/contextualActionBarColor</item>
-
-        <!-- Customize your theme here. -->
     </style>
 
     <style name="SplashScreenStyle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
